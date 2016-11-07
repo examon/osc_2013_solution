@@ -1,0 +1,21 @@
+# Tomas Meszaros <exo@tty.sk>
+# Testing scenario for https://bugzilla.redhat.com/show_bug.cgi?id=1020191 
+
+1. Install Cumin and all its dependencies according to the documentation. [https://fedorahosted.org/grid/wiki/Cumin]
+2. [optional] Clear all /var/lib/condor/spool/* so we will have clear job list.
+3. Start/Restart condor, cumin-data & cumin-web.
+4. Open up browser and load the following url http://http://localhost:45672/index.html
+5. Log in as an administrator.
+6. Once logged in, click on the "Submissions" tab.
+7. Submit at least 10 jobs by clicking at the "Submit job". The jobs must have identical "Description".
+   - If you have condor-aviary installed you can submit jobs using the following script:
+
+     #!/bin/sh
+     export PYTHONPATH=/usr/share/condor/aviary/module
+     /usr/share/condor/aviary/submit.py
+
+8. Click on the entry you created in the Submissions table (e.g. if you called your job "test", click on the item "test").
+   This will open the table of the all jobs you just created with the same "Description".
+9. Check table items, they should be already ordered.
+10. Sort items according to the Job id by clicking on the "Job id" link in the table header.
+11. Check again (items should be sorted differently, e.g. in ascending/descending order).

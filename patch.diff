@@ -1,0 +1,18 @@
+Index: cumin/python/cumin/qmfadapter.py
+===================================================================
+--- cumin/python/cumin/qmfadapter.py	(revision 5787)
++++ cumin/python/cumin/qmfadapter.py	(working copy)
+@@ -100,6 +100,13 @@
+         sort_field = options.sort_field
+         rev = options.sort_ascending == False
+ 
++        # When sorting by Job id: We want numerical sorting, not lexical.
++        # Sort only table that has identical fields items with jobs_fields items.
++        jobs_fields = ["GlobalJobId", "Cmd", "JobStatus", "JobId"]
++        if sort_field.index == 1 and \
++           all(map(lambda x: x in jobs_fields, self.fields_by_name.keys())):
++            return sorted(rows, key=lambda row: float(row[0]), reverse=rev)
++
+         return sorted(rows, key=itemgetter(sort_field.index), reverse=rev)
+ 
+     def limit_rows(self, rows, options):
